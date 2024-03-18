@@ -1,12 +1,12 @@
 import ExampleContextProvider from "./context/example_context";
-import ExamplePage from "./pages/example_page";
+import AboutPage from "./pages/about";
 
 export default function App() {
-    return (
-        <ExampleContextProvider>
-            <div>
-                <ExamplePage />
-            </div>
-        </ExampleContextProvider>
-    );
+	return (
+		<ExampleContextProvider>
+			<div>
+				<AboutPage />
+			</div>
+		</ExampleContextProvider>
+	);
 }
