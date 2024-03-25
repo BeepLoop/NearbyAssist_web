@@ -3,6 +3,7 @@ import ExampleContextProvider from "./context/example_context";
 import ExamplePage from "./pages/example_page";
 import HomePage from "./pages/home_page";
 import LoginPage from "./pages/login_page";
+import Dashboard from "./pages/dashboard";
 
 export default function App() {
     return (
@@ -10,6 +11,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/example" element={<ExamplePage />} />
             </Routes>
         </ExampleContextProvider>
