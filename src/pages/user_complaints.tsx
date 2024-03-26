@@ -22,7 +22,7 @@ export default function UserComplaints() {
                 </div>
             </div>
             {/* Complaints Table */}
-            <div className="border-gray-200 bg-gray-100 shadow-md mx-auto mb-4 p-8 border rounded-md overflow-x-auto container">
+            <div className="border-gray-200 bg-gray-100 shadow-md mx-auto mb-4 p-4 p-8 border rounded-md overflow-x-auto container">
                 <table className="border-gray-300 border rounded-lg w-full">
                     <thead>
                         <tr className="bg-gray-200">
