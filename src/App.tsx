@@ -4,7 +4,6 @@ import ExamplePage from "./pages/example_page";
 import HomePage from "./pages/home_page";
 import LoginPage from "./pages/login_page";
 import Dashboard from "./pages/dashboard";
-import UserComplaints from "./pages/user_complaints";
 
 export default function App() {
     return (
@@ -13,7 +12,6 @@ export default function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/complaints" element={<UserComplaints />} />
                 <Route path="/example" element={<ExamplePage />} />
             </Routes>
         </ExampleContextProvider>
