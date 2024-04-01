@@ -1,16 +1,12 @@
 export default function AccountManagement() {
     return (
-        <div>
-            <header className="bg-green-500 py-4 text-white">
-                <div className="flex justify-between items-center mx-auto px-4 container">
-                    <h1 className="font-semibold text-2xl">
-                        Account Restriction
-                    </h1>
-                </div>
-            </header>
-            <br></br>
+        <div className="flex-1">
+            <div className="flex justify-between items-center bg-gray-500 mx-auto px-4 py-4 text-white container">
+                <h1 className="font-semibold text-2xl">Account Management</h1>
+            </div>
+
             {/* Service Providers Table */}
-            <div className="my-4">
+            <div>
                 <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md container">
                     <h2 className="mb-2 font-semibold text-lg">
                         Service Vendors
@@ -150,8 +146,6 @@ export default function AccountManagement() {
                     </div>
                 </div>
             </div>
-
-            <br></br>
             {/* Users Table */}
             <div className="my-4">
                 <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md container">

@@ -7,6 +7,7 @@ export default function HomePage() {
             <Link to="/example" className="text-blue-500 hover:text-blue-400">
                 Example Page
             </Link>
+
             <Link to="/login" className="text-blue-500 hover:text-blue-400">
                 Login Page
             </Link>

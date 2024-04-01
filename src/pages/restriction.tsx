@@ -1,14 +1,9 @@
 export default function AccountRestriction() {
     return (
-        <div>
-            <header className="bg-green-500 py-4 text-white">
-                <div className="flex justify-between items-center mx-auto px-4 container">
-                    <h1 className="font-semibold text-2xl">
-                        Account Restriction
-                    </h1>
-                </div>
-            </header>
-            <br></br>
+        <div className="flex-1">
+            <div className="flex justify-between items-center bg-gray-500 mx-auto px-4 py-4 text-white container">
+                <h1 className="font-semibold text-2xl">Account Restricted</h1>
+            </div>
 
             {/* Service Providers Table */}
             <div className="mb-8">
