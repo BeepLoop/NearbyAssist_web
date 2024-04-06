@@ -1,7 +1,7 @@
 export default function AccountManagement() {
     return (
         <div className="flex-1 p-4">
-            <div className="bg-gray-500 px-4 py-4 text-white container">
+            <div className="bg-gray-500 px-4 py-4 text-white">
                 <h1 className="font-semibold text-2xl">Account Management</h1>
             </div>
 
