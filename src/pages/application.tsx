@@ -1,13 +1,12 @@
 export default function VendorApplication() {
     return (
-        <div className="flex-1">
-           
-                <div className="flex justify-between items-center bg-gray-500 mx-auto px-4 py-4 text-white container">
-                    <h1 className="font-semibold text-2xl">
-                        Service Vendor Application
-                    </h1>
-                </div>
-            
+        <div className="flex-1 p-4">
+            <div className="bg-gray-500 px-4 py-4 text-white container">
+                <h1 className="font-semibold text-2xl">
+                    Service Vendor Application
+                </h1>
+            </div>
+
             <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md container">
                 <h2 className="mb-2 font-semibold text-lg">Service Vendors</h2>
                 <div className="flex justify-end mb-2">

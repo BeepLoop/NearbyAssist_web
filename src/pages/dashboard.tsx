@@ -1,7 +1,7 @@
 export default function Dashboard() {
     return (
-        <div className="flex-1">
-            <div className="flex justify-between items-center bg-gray-500 mx-auto px-4 py-4 text-white container">
+        <div className="flex-1 p-4">
+            <div className="bg-gray-500 px-4 py-4 text-white container">
                 <h1 className="font-semibold text-2xl">Dashboard Overview</h1>
             </div>
 
