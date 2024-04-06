@@ -7,7 +7,7 @@ export default function AccountManagement() {
 
             {/* Service Providers Table */}
             <div>
-                <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md container">
+                <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Service Vendors
                     </h2>
@@ -24,7 +24,7 @@ export default function AccountManagement() {
                     </div>
                 </div>
 
-                <div className="border-gray-200 bg-gray-100 shadow-md mx-auto mb-4 p-8 border rounded-md overflow-x-auto container">
+                <div className="border-gray-200 bg-gray-100 shadow-md mx-auto mb-4 p-8 border rounded-md overflow-x-auto">
                     <table className="border-gray-300 border rounded-lg w-full">
                         <thead>
                             <tr className="bg-gray-200">
@@ -85,7 +85,7 @@ export default function AccountManagement() {
                             {/* Add more rows with dynamic data if needed */}
                         </tbody>
                     </table>
-                    <div className="mx-auto p-4 container">
+                    <div className="mx-auto p-4">
                         <div className="relative">
                             {/* Help text */}
                             <span className="bottom left-0 absolute mt-4 text-gray-700 text-sm dark:text-gray-400">
@@ -148,7 +148,7 @@ export default function AccountManagement() {
             </div>
             {/* Users Table */}
             <div className="my-4">
-                <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md container">
+                <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mx-auto mb-2 p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">Clients</h2>
                     <div className="flex justify-end mb-2">
                         <input
@@ -162,7 +162,7 @@ export default function AccountManagement() {
                     </div>
                 </div>
 
-                <div className="border-gray-200 bg-gray-100 shadow-md mx-auto mb-4 p-8 border rounded-md overflow-x-auto container">
+                <div className="border-gray-200 bg-gray-100 shadow-md mb-4 p-8 border rounded-md overflow-x-auto">
                     <table className="border-gray-300 border rounded-lg w-full">
                         <thead>
                             <tr className="bg-gray-200">
@@ -224,7 +224,7 @@ export default function AccountManagement() {
                         </tbody>
                     </table>
 
-                    <div className="mx-auto p-4 container">
+                    <div className="mx-auto p-4">
                         <div className="relative">
                             {/* Help text */}
                             <span className="bottom left-0 absolute mt-4 text-gray-700 text-sm dark:text-gray-400">
