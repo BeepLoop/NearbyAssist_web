@@ -10,6 +10,7 @@ import NotFound from "./pages/not_found";
 import AccountRestriction from "./pages/restriction";
 import AccountManagement from "./pages/management";
 import MainLayout from "./layout/MainLayout";
+import AssistantPage from "./pages/assistant";
 
 export default function App() {
     return (
@@ -35,6 +36,7 @@ export default function App() {
                         element={<AccountRestriction />}
                     />
                     <Route path="management" element={<AccountManagement />} />
+                    <Route path="assistant" element={<AssistantPage />} />
                     <Route path="example" element={<ExamplePage />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />

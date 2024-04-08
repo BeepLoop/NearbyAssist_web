@@ -29,6 +29,23 @@ export default function Sidebar() {
                         <p className="px-4 py-2 text-white">Dashboard</p>
                     </Link>
                     <Link
+                        className="flex gap-4 hover:bg-green-600"
+                        to={"/content/complaints"}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-7"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                fill="white"
+                                d="M9.5 1.5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1V7l1.8-1.5h2.2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1zM5 4a2 2 0 1 0 0 4a2 2 0 0 0 0-4m2.5 5h-5A1.5 1.5 0 0 0 1 10.5c0 1.116.459 2.01 1.212 2.615C2.953 13.71 3.947 14 5 14c1.053 0 2.047-.29 2.788-.885C8.54 12.51 9 11.616 9 10.5A1.5 1.5 0 0 0 7.5 9"
+                            />
+                        </svg>
+
+                        <p className="py-2 text-white">Complaints</p>
+                    </Link>
+                    <Link
                         className="flex hover:bg-green-600 4 gap"
                         to={"/content/application"}
                     >
@@ -48,23 +65,6 @@ export default function Sidebar() {
                         </p>
                     </Link>
 
-                    <Link
-                        className="flex gap-4 hover:bg-green-600"
-                        to={"/content/complaints"}
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-7"
-                            viewBox="0 0 16 16"
-                        >
-                            <path
-                                fill="white"
-                                d="M9.5 1.5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1V7l1.8-1.5h2.2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1zM5 4a2 2 0 1 0 0 4a2 2 0 0 0 0-4m2.5 5h-5A1.5 1.5 0 0 0 1 10.5c0 1.116.459 2.01 1.212 2.615C2.953 13.71 3.947 14 5 14c1.053 0 2.047-.29 2.788-.885C8.54 12.51 9 11.616 9 10.5A1.5 1.5 0 0 0 7.5 9"
-                            />
-                        </svg>
-
-                        <p className="py-2 text-white">Complaints</p>
-                    </Link>
                     <Link
                         className="flex gap-4 hover:bg-green-600"
                         to={"/content/restriction"}
@@ -102,6 +102,25 @@ export default function Sidebar() {
                         </svg>
 
                         <p className="py-2 text-white">Account Management</p>
+                    </Link>
+                    <Link
+                        className="flex gap-4 hover:bg-green-600"
+                        to={"/content/assistant"}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-7"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="white"
+                                d="M15 14c-2.67 0-8 1.33-8 4v2h16v-2c0-2.67-5.33-4-8-4m-9-4V7H4v3H1v2h3v3h2v-3h3v-2m6 2a4 4 0 0 0 4-4a4 4 0 0 0-4-4a4 4 0 0 0-4 4a4 4 0 0 0 4 4"
+                            />
+                        </svg>
+
+                        <p className="py-2 text-white">
+                            Create Assistant Account
+                        </p>
                     </Link>
                 </ul>
             </div>
