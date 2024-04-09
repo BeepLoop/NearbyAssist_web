@@ -1,12 +1,12 @@
 export default function AssistantPage() {
     return (
         <div className="flex-1 p-4">
-            <header className="flex justify-between items-center bg-gray-500 px-4 py-4 text-white">
+            <div className="flex justify-between items-center bg-gray-500 px-4 py-4 text-white">
                 <h1 className="font-semibold text-2xl">Assistant Page</h1>
                 <button className="bg-green-500 hover:bg-green-800 focus:shadow-outline px-4 py-2 rounded font-bold text-white focus:outline-none">
                     Create Account
                 </button>
-            </header>
+            </div>
             {/* Account Created Header */}
             <div className="flex justify-between items-center border-gray-200 bg-white shadow-md mb-2 p-4 border rounded-md">
                 <h2 className="mb-2 font-semibold text-lg">Accounts Created</h2>
