@@ -11,6 +11,7 @@ import AccountRestriction from "./pages/restriction";
 import AccountManagement from "./pages/management";
 import MainLayout from "./layout/MainLayout";
 import AssistantPage from "./pages/assistant";
+import ComplaintsDetails from "./pages/complaintsdetails";
 
 export default function App() {
     return (
@@ -29,7 +30,20 @@ export default function App() {
                 </Route>
                 <Route path="/content" element={<MainLayout />}>
                     <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="complaints" element={<Complaints />} />
+                    <Route
+                        path="complaints"
+                        element={
+                            <div>
+                                <Outlet />
+                            </div>
+                        }
+                    >
+                        <Route index element={<Complaints />} />
+                        <Route
+                            path="complaintsdetails"
+                            element={<ComplaintsDetails />}
+                        />
+                    </Route>
                     <Route path="application" element={<VendorApplication />} />
                     <Route
                         path="restriction"
