@@ -10,8 +10,8 @@ import NotFound from "./pages/not_found";
 import AccountRestriction from "./pages/restriction";
 import AccountManagement from "./pages/management";
 import MainLayout from "./layout/MainLayout";
-
 import ComplaintsDetails from "./pages/complaintsdetails";
+import ApplicationDetails from "./pages/applicationdetails";
 
 export default function App() {
     return (
@@ -45,6 +45,10 @@ export default function App() {
                         />
                     </Route>
                     <Route path="application" element={<VendorApplication />} />
+                    <Route
+                        path="applicationdetails"
+                        element={<ApplicationDetails />}
+                    />
                     <Route
                         path="restriction"
                         element={<AccountRestriction />}
