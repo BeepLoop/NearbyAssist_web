@@ -28,3 +28,39 @@ export default {
 -   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 -   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 -   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## How to use
+
+1. Clone the repo
+```bash 
+git clone git@github.com:BeepLoop/NearbyAssist_web.git
+```
+
+2. Install dependencies
+```bash 
+cd NearbyAssist_web
+npm install
+```
+
+3. Run dev server
+```bash 
+npm run dev
+```
+
+4. Build project
+```bash 
+npm run build
+```
+
+## Using docker 
+Docker configuration is also provided in the project. To dockerize the project follow the instructions below.
+
+1. Build the docker image
+```bash 
+docker build -t  nearbyassist_web
+```
+
+2. Run
+```bash 
+docker run --name web -p 3001:80 --rm -t nearbyassist_web
+```
