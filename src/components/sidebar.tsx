@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
     return (
@@ -96,20 +96,18 @@ type NavItemProps = {
 };
 
 function NavItem({ path, title, children }: NavItemProps) {
-    const location = useLocation();
-    const isActive = location.pathname === path;
-
     return (
-        <Link
+        <NavLink
             to={path}
-            className={`flex gap-4 rounded-md px-2 py-2 ${
-                isActive
-                    ? "bg-primary text-white"
-                    : "hover:bg-primary-pale text-black"
-            }`}
+            className={({ isActive }) => {
+                const defaultClass = "flex gap-4 rounded-md px-2 py-2";
+                return isActive
+                    ? defaultClass + " bg-primary text-white"
+                    : defaultClass + " hover:bg-primary-pale text-black";
+            }}
         >
             {children}
             <p>{title}</p>
-        </Link>
+        </NavLink>
     );
 }
