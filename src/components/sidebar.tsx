@@ -1,17 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
     return (
-        <div className="rounded-md border shadow-md">
+        <div className="shadow-2xl rounded-md">
             <div className="p-3.5 text-center">
-                <h2 className="font-semi mb-2 text-center text-2xl">
+                <h2 className="mb-2 font-semi text-2xl text-center">
                     <span className="text-black">Nearby</span>
-                    <span className="text-green-600">Assist</span>
+                    <span className="text-primary">Assist</span>
                 </h2>
             </div>
             <div className="mt-8 p-4">
                 <ul className="space-y-6">
-                    <NavItem path="/dashboard" title="Dashboard">
+                    <NavItem path="/content/dashboard" title="Dashboard">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6  `}
@@ -23,7 +23,7 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
-                    <NavItem path="/complaints" title="Complaints">
+                    <NavItem path="/content/complaints" title="Complaints">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6 `}
@@ -36,7 +36,7 @@ export default function Sidebar() {
                         </svg>
                     </NavItem>
                     <NavItem
-                        path="/application"
+                        path="/content/application"
                         title="Vendor Application"
                     >
                         <svg
@@ -51,7 +51,7 @@ export default function Sidebar() {
                         </svg>
                     </NavItem>
                     <NavItem
-                        path="/restriction"
+                        path="/content/restriction"
                         title="Account Restriction"
                     >
                         <svg
@@ -70,7 +70,7 @@ export default function Sidebar() {
                         </svg>
                     </NavItem>
                     <NavItem
-                        path="/management"
+                        path="/content/management"
                         title="Account Management"
                     >
                         <svg
@@ -96,17 +96,20 @@ type NavItemProps = {
 };
 
 function NavItem({ path, title, children }: NavItemProps) {
+    const location = useLocation();
+    const isActive = location.pathname === path;
 
     return (
-        <NavLink
+        <Link
             to={path}
-            className={({ isActive }) => {
-                const defaultClasses = "flex gap-4 rounded-md px-2 py-2";
-                return isActive ? defaultClasses + " bg-green-600 text-white" : defaultClasses + " text-black hover:bg-green-600";
-            }}
+            className={`flex gap-4 rounded-md px-2 py-2 ${
+                isActive
+                    ? "bg-primary text-white"
+                    : "hover:bg-primary-pale text-black"
+            }`}
         >
             {children}
             <p>{title}</p>
-        </NavLink>
+        </Link>
     );
 }

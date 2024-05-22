@@ -5,7 +5,7 @@ import LoginPage from "../pages/login_page";
 import MainLayout from "../layout/MainLayout";
 import Dashboard from "../pages/dashboard";
 import Complaints from "../pages/complaints";
-import ComplaintsDetails from "../pages/complaintsdetails";
+import ComplaintsDetails from "../pages/complaints_details";
 import VendorApplication from "../pages/application";
 import AccountRestriction from "../pages/restriction";
 import AccountManagement from "../pages/management";
@@ -13,70 +13,85 @@ import ExamplePage from "../pages/example_page";
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: "/",
         element: <HomePage />,
-        errorElement: <NotFound />
+        errorElement: <NotFound />,
     },
     {
         element: <LoginPage />,
         children: [
             {
-                path: 'login',
-                element: <LoginPage />
-            }
-        ]
+                path: "login",
+                element: <LoginPage />,
+            },
+        ],
     },
     {
         element: <MainLayout />,
         children: [
             {
-                path: 'dashboard',
-                element: <Dashboard />
+                path: "dashboard",
+                element: <Dashboard />,
             },
             {
-                path: 'complaints',
-                element: <div> <Outlet /> </div>,
+                path: "complaints",
+                element: (
+                    <div>
+                        {" "}
+                        <Outlet />{" "}
+                    </div>
+                ),
                 children: [
                     {
-                        path: '',
-                        element: <Complaints />
+                        path: "",
+                        element: <Complaints />,
                     },
                     {
-                        path: ':complaintId',
+                        path: ":complaintId",
                         element: <ComplaintsDetails />,
-                    }
-                ]
+                    },
+                ],
             },
             {
-                path: 'application',
-                element: <div> <Outlet /> </div>,
+                path: "application",
+                element: (
+                    <div>
+                        {" "}
+                        <Outlet />{" "}
+                    </div>
+                ),
                 children: [
                     {
-                        path: '',
-                        element: <VendorApplication />
+                        path: "",
+                        element: <VendorApplication />,
                     },
                     {
-                        path: ':applicationId',
-                        element: <div> <h1>vendor application details</h1> </div>
-                    }
-                ]
+                        path: ":applicationId",
+                        element: (
+                            <div>
+                                {" "}
+                                <h1>vendor application details</h1>{" "}
+                            </div>
+                        ),
+                    },
+                ],
             },
             {
-                path: 'restriction',
-                element: <AccountRestriction />
+                path: "restriction",
+                element: <AccountRestriction />,
             },
             {
-                path: 'management',
-                element: <AccountManagement />
+                path: "management",
+                element: <AccountManagement />,
             },
             {
-                path: 'example',
-                element: <ExamplePage />
-            }
-        ]
-    }
-])
+                path: "example",
+                element: <ExamplePage />,
+            },
+        ],
+    },
+]);
 
 export default function useRouter() {
-    return router
+    return router;
 }
