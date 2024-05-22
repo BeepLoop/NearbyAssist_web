@@ -72,7 +72,7 @@ export default function VendorApplication() {
                         <td className="flex justify-center px-6 py-4">
                             <ul>
                                 <Link
-                                    to={"/content/applicationdetails"}
+                                    to={"/application/1"}
                                     className="text-blue hover:underline"
                                 >
                                     View Application
@@ -87,7 +87,7 @@ export default function VendorApplication() {
                         <td className="flex justify-center px-6 py-4">
                             <ul>
                                 <Link
-                                    to={"/content/applicationdetails"}
+                                    to={"/application/2"}
                                     className="text-blue hover:underline"
                                 >
                                     View Application

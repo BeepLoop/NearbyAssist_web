@@ -11,7 +11,7 @@ export default function Sidebar() {
             </div>
             <div className="mt-8 p-4">
                 <ul className="space-y-6">
-                    <NavItem path="/content/dashboard" title="Dashboard">
+                    <NavItem path="/dashboard" title="Dashboard">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6  `}
@@ -23,7 +23,7 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
-                    <NavItem path="/content/complaints" title="Complaints">
+                    <NavItem path="/complaints" title="Complaints">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6 `}
@@ -35,10 +35,7 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
-                    <NavItem
-                        path="/content/application"
-                        title="Vendor Application"
-                    >
+                    <NavItem path="/application" title="Vendor Application">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6  `}
@@ -50,10 +47,7 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
-                    <NavItem
-                        path="/content/restriction"
-                        title="Account Restriction"
-                    >
+                    <NavItem path="/restriction" title="Account Restriction">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6 `}
@@ -69,10 +63,7 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
-                    <NavItem
-                        path="/content/management"
-                        title="Account Management"
-                    >
+                    <NavItem path="/management" title="Account Management">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6 `}

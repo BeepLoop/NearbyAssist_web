@@ -29,13 +29,12 @@ export default function LoginPage() {
                         />
                     </div>
 
-                    <Link
-                        to="/"
+                    <button
                         type="submit"
                         className="flex flex-col items-center bg-blue hover:bg-blue-lightblue px-4 py-2 rounded-md w-full font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-lightblue focus:ring-offset-2"
                     >
                         Login
-                    </Link>
+                    </button>
                 </form>
             </div>
         </div>

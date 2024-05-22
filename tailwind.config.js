@@ -13,16 +13,15 @@ export default {
             },
             red:{
                  DEFAULT: '#FF0000',
-                 lightred: '#FF5D5D',
+                 lightred: '#FF5D5D'
             },
             gray:{
                 DEFAULT: '#606C5D',
-                darkgray: '#1D1D1D',
-                
+                darkgray: '#1D1D1D'    
             },
             blue:{
                 DEFAULT: '#1D24CA',
-                lightblue: '#1679AB',
+                lightblue: '#1679AB'
             },
             white:{
                  DEFAULT: '#FFFFFF',
@@ -35,7 +34,11 @@ export default {
             },
             yellow:{
                 DEFAULT:'#FFC100'
-            }
+            },
+             indigo:{
+                DEFAULT:'#1C1678',
+                darkindigo: '#0A1D56'
+            },
 
         }
     },

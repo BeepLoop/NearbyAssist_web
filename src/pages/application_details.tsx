@@ -117,7 +117,7 @@ export default function ApplicationDetails() {
                 <div className="flex justify-end">
                     <Link
                         className="bg-red hover:bg-red-lightred ml-auto px-4 py-2 rounded font-bold text-white"
-                        to={"/content/application"}
+                        to={"/application"}
                     >
                         Close
                     </Link>
