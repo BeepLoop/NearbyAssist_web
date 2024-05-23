@@ -64,7 +64,7 @@ export default function Complaints() {
                         <td className="px-6 py-4">
                             <ul>
                                 <Link
-                                    to={"/content/complaintsdetails"}
+                                    to={"/complaints/1"}
                                     className="text-blue hover:underline"
                                 >
                                     View Details
@@ -78,7 +78,7 @@ export default function Complaints() {
                         <td className="px-6 py-4">
                             <ul>
                                 <Link
-                                    to={"/content/complaintsdetails"}
+                                    to={"/complaints/2"}
                                     className="text-blue hover:underline"
                                 >
                                     View Details
