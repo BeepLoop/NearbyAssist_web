@@ -1,11 +1,22 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({ username: "", password: "" });
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setIsSubmitted(true);
+
+        validateForm();
+
+        if (!isFormValid) {
+            console.error("Form is invalid");
+            return;
+        }
 
         try {
             const response = await fetch(
@@ -16,27 +27,49 @@ export default function LoginPage() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        username: username,
-                        password: password,
+                        Username: username,
+                        Password: password,
                     }),
                 }
             );
-
             const data = await response.json();
-
             if (response.ok) {
                 console.log("Login successful:", data);
             } else {
-                console.error("Login failed:", data.message);
+                console.error("Login failed:", data);
             }
         } catch (error) {
             console.error("An error occurred:", error);
         }
     };
 
+    const validateForm = () => {
+        const newErrors: { username: string; password: string } = {
+            username: "",
+            password: "",
+        };
+
+        if (!username) {
+            newErrors.username = "Username is required";
+        }
+
+        if (!password) {
+            newErrors.password = "Password is required";
+        }
+
+        setErrors(newErrors);
+        setIsFormValid(!newErrors.username && !newErrors.password);
+    };
+
+    useEffect(() => {
+        if (isSubmitted) {
+            validateForm();
+        }
+    }, [username, password, isSubmitted]);
+
     return (
         <div className="flex justify-center items-center bg-gray-100 min-h-screen">
-            <div className="bg-white shadow-2xl p-8 rounded-md w-full max-w-sm">
+            <div className="bg-white shadow-md p-8 rounded-md w-full max-w-sm">
                 <h2 className="mb-4 font-semibold text-2xl">
                     NearbyAssist Login
                 </h2>
@@ -47,7 +80,7 @@ export default function LoginPage() {
                 >
                     <div className="mb-4 w-full">
                         <input
-                            type="username"
+                            type="text"
                             id="username"
                             name="username"
                             placeholder="Username"
@@ -56,6 +89,11 @@ export default function LoginPage() {
                             onChange={(e) => setUsername(e.target.value)}
                             autoComplete="off"
                         />
+                        {errors.username && isSubmitted && (
+                            <p className="text-red text-xs">
+                                {errors.username}
+                            </p>
+                        )}
                     </div>
 
                     <div className="mb-6 w-full">
@@ -69,11 +107,17 @@ export default function LoginPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="off"
                         />
+                        {errors.password && isSubmitted && (
+                            <p className="text-red text-xs">
+                                {errors.password}
+                            </p>
+                        )}
                     </div>
 
                     <button
                         type="submit"
-                        className="flex flex-col items-center bg-blue hover:bg-blue-lightblue px-4 py-2 rounded-md w-full font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-lightblue focus:ring-offset-2"
+                        className="bg-blue hover:bg-blue-lightblue px-4 py-2 rounded-md w-full font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-lightblue focus:ring-offset-2"
+                        disabled={!isFormValid && isSubmitted}
                     >
                         Login
                     </button>
