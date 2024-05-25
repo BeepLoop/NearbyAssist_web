@@ -9,7 +9,6 @@ export default function Header() {
 
     return (
         <header className="flex justify-end items-center bg-black px-6 py-4 text-white">
-            {/* Notification icon */}
             <div className="flex items-center px-4">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -29,9 +28,7 @@ export default function Header() {
                 </svg>
                 <span className="mx-2">Notifications</span>
             </div>
-            {/* Notification Dropdown content */}
 
-            {/* Admin icon */}
             <div className="relative">
                 <button className="flex items-center" onClick={toggleDropdown}>
                     <svg
@@ -61,10 +58,9 @@ export default function Header() {
                     </svg>
                 </button>
 
-                {/* Dropdown content */}
                 {isAdminDropdownOpen && (
                     <div className="top-full right-0 absolute bg-white shadow-md mt-2 rounded-md w-44">
-                        <button className="flex items-center hover:bg-gray px-4 py-2 w-full text-black text-left">
+                        <button className="flex items-center hover:bg-gray-lightgray px-4 py-2 rounded-md w-full text-black text-left">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="mr-2 w-7"
@@ -81,7 +77,7 @@ export default function Header() {
                             </svg>
                             Profile
                         </button>
-                        <button className="flex items-center hover:bg-gray px-4 py-2 w-full text-black text-left">
+                        <button className="flex items-center hover:bg-gray-lightgray px-4 py-2 rounded-md w-full text-black text-left">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="mr-2 w-7"

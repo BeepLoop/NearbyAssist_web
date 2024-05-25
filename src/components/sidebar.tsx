@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
     return (
-        <div className="shadow-2xl rounded-md">
+        <div className="shadow-lg rounded-md">
             <div className="p-3.5 text-center">
                 <h2 className="mb-2 font-semi text-2xl text-center">
                     <span className="text-black">Nearby</span>
@@ -11,7 +11,7 @@ export default function Sidebar() {
             </div>
             <div className="mt-8 p-4">
                 <ul className="space-y-6">
-                    <NavItem path="/content/dashboard" title="Dashboard">
+                    <NavItem path="/dashboard" title="Dashboard">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6  `}
@@ -23,7 +23,7 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
-                    <NavItem path="/content/complaints" title="Complaints">
+                    <NavItem path="/complaints" title="Complaints">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className={`w-6 `}

@@ -1,19 +1,44 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({ username: "", password: "" });
-    const [isFormValid, setIsFormValid] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    function validateForm() {
+        const newErrors: { username: string; password: string } = {
+            username: "",
+            password: "",
+        };
+
+        if (!username) {
+            newErrors.username = "Username is required";
+        }
+
+        if (!password) {
+            newErrors.password = "Password is required";
+        }
+
+        setErrors(newErrors);
+        return !newErrors.username && !newErrors.password;
+    }
+
+    useEffect(() => {
+        if (isSubmitted) {
+            validateForm();
+        }
+    }, [username, password, isSubmitted]);
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsSubmitted(true);
 
-        validateForm();
+        const formIsValid = validateForm();
 
-        if (!isFormValid) {
+        if (!formIsValid) {
             console.error("Form is invalid");
             return;
         }
@@ -35,41 +60,18 @@ export default function LoginPage() {
             const data = await response.json();
             if (response.ok) {
                 console.log("Login successful:", data);
+                navigate("/dashboard");
             } else {
                 console.error("Login failed:", data);
             }
         } catch (error) {
             console.error("An error occurred:", error);
         }
-    };
-
-    const validateForm = () => {
-        const newErrors: { username: string; password: string } = {
-            username: "",
-            password: "",
-        };
-
-        if (!username) {
-            newErrors.username = "Username is required";
-        }
-
-        if (!password) {
-            newErrors.password = "Password is required";
-        }
-
-        setErrors(newErrors);
-        setIsFormValid(!newErrors.username && !newErrors.password);
-    };
-
-    useEffect(() => {
-        if (isSubmitted) {
-            validateForm();
-        }
-    }, [username, password, isSubmitted]);
+    }
 
     return (
         <div className="flex justify-center items-center bg-gray-100 min-h-screen">
-            <div className="bg-white shadow-md p-8 rounded-md w-full max-w-sm">
+            <div className="bg-white shadow-2xl p-8 rounded-md w-full max-w-sm">
                 <h2 className="mb-4 font-semibold text-2xl">
                     NearbyAssist Login
                 </h2>
@@ -117,7 +119,10 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         className="bg-blue hover:bg-blue-lightblue px-4 py-2 rounded-md w-full font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-lightblue focus:ring-offset-2"
-                        disabled={!isFormValid && isSubmitted}
+                        disabled={
+                            isSubmitted &&
+                            (errors.username !== "" || errors.password !== "")
+                        }
                     >
                         Login
                     </button>
