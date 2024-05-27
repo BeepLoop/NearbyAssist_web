@@ -27,10 +27,6 @@ export default function ApplicationDetails() {
 
     return (
         <div className="p-8">
-            <div className="bg-primary px-4 py-2 rounded-lg text-white">
-                <h1 className="font-semibold text-2xl">Vendor Details</h1>
-            </div>
-
             <div className="shadow-md mt-2 p-8 rounded-md">
                 <h2 className="mb-2 font-semibold text-lg">
                     Applicant Information
@@ -224,7 +220,7 @@ export default function ApplicationDetails() {
                     <div className="absolute inset-0 bg-gray opacity-75"></div>
                     <div className="relative z-10 bg-white shadow-md p-8 rounded-md w-full max-w-2xl">
                         <button
-                            className="top-2 right-2 absolute text-tgray hover:text-gray-darkgray"
+                            className="top-2 right-2 absolute text-gray hover:text-gray-darkgray"
                             onClick={closeDeclineModal}
                         >
                             <svg
@@ -245,7 +241,7 @@ export default function ApplicationDetails() {
                             <label className="block mb-2 font-bold">
                                 Applicant Name:
                             </label>
-                            <p className="text-gray-900"></p>
+                            <p className="text-gray-darkgray"></p>
                         </div>
                         <div className="mb-4">
                             <label className="block mb-2 font-bold">

@@ -109,7 +109,7 @@ export default function AccountManagement() {
                             Entries
                         </span>
                         <div className="inline-flex right-0 absolute">
-                            <button className="flex justify-center items-center bg-gray hover:bg-gray-darkgray dark:hover:bg-gray dark:bg-grays-darkgray px-3 rounded-s h-8 font-medium text-sm text-white dark:hover:text-white dark:text-gray">
+                            <button className="flex justify-center items-center bg-gray hover:bg-gray-darkgray dark:hover:bg-gray dark:bg-gray-darkgray px-3 rounded-s h-8 font-medium text-sm text-white dark:hover:text-white dark:text-gray">
                                 <svg
                                     className="w-3.5 h-3.5 me-2 rtl:rotate-180"
                                     aria-hidden="true"
