@@ -52,14 +52,19 @@ export default function LoginPage() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        Username: username,
-                        Password: password,
+                        username: username,
+                        password: password,
                     }),
                 }
             );
             const data = await response.json();
             if (response.ok) {
                 console.log("Login successful:", data);
+
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("adminId", data.adminId);
+                localStorage.setItem("refreshToken", data.refreshToken);
+
                 navigate("/dashboard");
             } else {
                 console.error("Login failed:", data);
