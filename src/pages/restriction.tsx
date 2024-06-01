@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function AccountRestriction() {
     return (
         <div className="flex-1 p-4">
@@ -47,6 +49,9 @@ export default function AccountRestriction() {
                 <thead>
                     <tr className="bg-primary border">
                         <th className="px-6 py-3 font-medium text-left text-white">
+                            Account ID
+                        </th>
+                        <th className="px-6 py-3 font-medium text-left text-white">
                             Name
                         </th>
                         <th className="px-6 py-3 font-medium text-left text-white">
@@ -62,22 +67,30 @@ export default function AccountRestriction() {
                 </thead>
                 <tbody>
                     <tr className="border">
+                        <td className="px-6 py-4">1</td>
                         <td className="px-6 py-4">John Doe</td>
                         <td className="px-6 py-4">20</td>
                         <td className="px-2 py-2">
-                            <button className="flex justify-center bg-red-lightred hover:bg-red mr-2 px-4 py-2 rounded font-bold text-white">
+                            <Link
+                                to={`/restriction/1`}
+                                className="flex justify-center bg-red-lightred hover:bg-red mr-2 px-4 py-2 rounded font-bold text-white"
+                            >
                                 Restrict
-                            </button>
+                            </Link>
                         </td>
                         <td className="px-6 py-4">164 hrs</td>
                     </tr>
                     <tr className="border">
+                        <td className="px-6 py-4">2</td>
                         <td className="px-6 py-4">John Dominic</td>
                         <td className="px-6 py-4">0</td>
                         <td className="px-2 py-2">
-                            <button className="flex justify-center bg-red-lightred hover:bg-red mr-2 px-4 py-2 rounded font-bold text-white">
+                            <Link
+                                to={"/restriction/2"}
+                                className="flex justify-center bg-red-lightred hover:bg-red mr-2 px-4 py-2 rounded font-bold text-white"
+                            >
                                 Restrict
-                            </button>
+                            </Link>
                         </td>
                         <td className="px-6 py-4"></td>
                     </tr>
