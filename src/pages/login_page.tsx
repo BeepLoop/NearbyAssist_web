@@ -26,11 +26,14 @@ export default function LoginPage() {
         return !newErrors.username && !newErrors.password;
     }
 
-    useEffect(() => {
-        if (isSubmitted) {
-            validateForm();
-        }
-    }, [username, password, isSubmitted]);
+    useEffect(
+        function validateOnSubmit() {
+            if (isSubmitted) {
+                validateForm();
+            }
+        },
+        [username, password, isSubmitted]
+    );
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
