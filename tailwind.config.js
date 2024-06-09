@@ -9,7 +9,8 @@ export default {
         colors: {
             primary: {
                 DEFAULT: '#4ECB71',
-                pale: '#DCFFB7'
+                pale: '#DCFFB7',
+                greener: '#163020'
             },
             red:{
                  DEFAULT: '#FF0000',

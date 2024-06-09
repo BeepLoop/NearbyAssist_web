@@ -13,9 +13,6 @@ import ExamplePage from "../pages/example_page";
 import ApplicationDetails from "../pages/application_details";
 import ComplaintLayout from "../layout/complaint_layout";
 import ApplicationLayout from "../layout/application_layout";
-import ProtectedRoute from "../components/protected_routes";
-import RestrictionLayout from "../layout/restriction_layout";
-import RestrictAction from "../pages/restrict_action";
 
 const router = createBrowserRouter([
     {
@@ -33,11 +30,7 @@ const router = createBrowserRouter([
         ],
     },
     {
-        element: (
-            <ProtectedRoute>
-                <MainLayout />
-            </ProtectedRoute>
-        ),
+        element: <MainLayout />,
         children: [
             {
                 path: "dashboard",
@@ -73,17 +66,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "restriction",
-                element: <RestrictionLayout />,
-                children: [
-                    {
-                        path: "",
-                        element: <AccountRestriction />,
-                    },
-                    {
-                        path: ":accountId",
-                        element: <RestrictAction />,
-                    },
-                ],
+                element: <AccountRestriction />,
             },
             {
                 path: "management",
@@ -100,6 +83,3 @@ const router = createBrowserRouter([
 export default function useRouter() {
     return router;
 }
-// export default function App() {
-//     return <RouterProvider router={router} />;
-// }
