@@ -78,9 +78,9 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex justify-center items-center bg-gray-100 min-h-screen">
-            <div className="bg-white shadow-2xl p-8 rounded-md w-full max-w-sm">
-                <h2 className="mb-4 font-semibold text-2xl">
+        <div className="bg-gray-100 flex min-h-screen items-center justify-center">
+            <div className="w-full max-w-sm rounded-md bg-white p-8 shadow-2xl">
+                <h2 className="mb-4 text-2xl font-semibold">
                     NearbyAssist Login
                 </h2>
 
@@ -94,13 +94,13 @@ export default function LoginPage() {
                             id="username"
                             name="username"
                             placeholder="Username"
-                            className="border-gray mt-1 px-4 py-2 border focus:border-blue rounded-md w-full focus:outline-none focus:ring-blue"
+                            className="mt-1 w-full rounded-md border border-gray px-4 py-2 focus:border-blue focus:outline-none focus:ring-blue"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             autoComplete="off"
                         />
                         {errors.username && isSubmitted && (
-                            <p className="text-red text-xs">
+                            <p className="text-xs text-red">
                                 {errors.username}
                             </p>
                         )}
@@ -112,13 +112,13 @@ export default function LoginPage() {
                             id="password"
                             name="password"
                             placeholder="Password"
-                            className="border-gray mt-1 px-4 py-2 border focus:border-blue rounded-md w-full focus:outline-none focus:ring-blue"
+                            className="mt-1 w-full rounded-md border border-gray px-4 py-2 focus:border-blue focus:outline-none focus:ring-blue"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="off"
                         />
                         {errors.password && isSubmitted && (
-                            <p className="text-red text-xs">
+                            <p className="text-xs text-red">
                                 {errors.password}
                             </p>
                         )}
@@ -126,7 +126,7 @@ export default function LoginPage() {
 
                     <button
                         type="submit"
-                        className="bg-blue hover:bg-blue-lightblue px-4 py-2 rounded-md w-full font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-lightblue focus:ring-offset-2"
+                        className="w-full rounded-md bg-blue px-4 py-2 font-semibold text-white hover:bg-blue-lightblue focus:outline-none focus:ring-2 focus:ring-blue-lightblue focus:ring-offset-2"
                         disabled={
                             isSubmitted &&
                             (errors.username !== "" || errors.password !== "")

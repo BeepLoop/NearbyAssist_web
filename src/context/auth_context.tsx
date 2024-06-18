@@ -1,30 +1,36 @@
-import { ReactNode, createContext, useState } from "react";
-
-type TUser = {
-    username: string
-    role: string
-}
+import { ReactNode, createContext } from "react";
+import useRequest from "../hooks/use_request";
+import useStorage from "../hooks/use_storage";
 
 interface IAuthContext {
-    getUser: () => TUser | null
-    login: (username: string, password: string) => Promise<void>
+    login: (username: string, password: string) => Promise<{ success: boolean }>
     logout: () => Promise<void>
-    refreshToken: () => Promise<void>
 }
 
 export const AuthContext = createContext({} as IAuthContext)
 
 export default function AuthContextProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<TUser | null>(null)
+    const { send } = useRequest();
+    const { updateSavedUser } = useStorage();
 
-    function getUser(): TUser | null {
-        return user
-    }
+    async function login(username: string, password: string): Promise<{ success: boolean }> {
+        const serverAddr = import.meta.env.VITE_BACKEND_URL;
+        const url = `${serverAddr}/auth/admin/login`;
 
-    async function login(username: string, password: string) {
-        setUser(null)
-        console.log({ username, password })
-        // implement login
+        try {
+            const response = await send("", url, "POST", JSON.stringify({ username, password }));
+            if (response === null) {
+                throw new Error("Request failed");
+            }
+
+            const data = await response.json();
+            updateSavedUser(data);
+
+            return { success: true };
+        } catch (e) {
+            console.error(e);
+            return { success: false };
+        }
     }
 
     async function logout() {
@@ -32,13 +38,8 @@ export default function AuthContextProvider({ children }: { children: ReactNode 
         // implement logout
     }
 
-    async function refreshToken() {
-        console.log('refreshToken')
-        // TODO: implement refresh token
-    }
-
     return (
-        <AuthContext.Provider value={{ getUser, login, logout, refreshToken }}>
+        <AuthContext.Provider value={{ login, logout }}>
             {children}
         </AuthContext.Provider>
     )
