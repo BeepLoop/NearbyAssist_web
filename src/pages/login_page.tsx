@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/use_auth";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
@@ -7,6 +8,8 @@ export default function LoginPage() {
     const [errors, setErrors] = useState({ username: "", password: "" });
     const [isSubmitted, setIsSubmitted] = useState(false);
     const navigate = useNavigate();
+
+    const { login } = useAuth();
 
     function validateForm() {
         const newErrors: { username: string; password: string } = {
@@ -26,15 +29,6 @@ export default function LoginPage() {
         return !newErrors.username && !newErrors.password;
     }
 
-    useEffect(
-        function validateOnSubmit() {
-            if (isSubmitted) {
-                validateForm();
-            }
-        },
-        [username, password, isSubmitted]
-    );
-
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setIsSubmitted(true);
@@ -47,33 +41,15 @@ export default function LoginPage() {
         }
 
         try {
-            const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_URL}/auth/admin/login`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password,
-                    }),
-                }
-            );
-            const data = await response.json();
-            if (response.ok) {
-                console.log("Login successful:", data);
-
-                localStorage.setItem("accessToken", data.accessToken);
-                localStorage.setItem("adminId", data.adminId);
-                localStorage.setItem("refreshToken", data.refreshToken);
-
-                navigate("/dashboard");
-            } else {
-                console.error("Login failed:", data);
+            const response = await login(username, password);
+            if (!response.success) {
+                throw new Error(response.error);
             }
-        } catch (error) {
-            console.error("An error occurred:", error);
+
+            // TODO: redirect to page based on role
+            navigate("/dashboard");
+        } catch (e) {
+            console.error(e);
         }
     }
 

@@ -4,10 +4,11 @@ export type TUserData = {
     accessToken: string,
     refreshToken: string,
     adminId: number,
+    role: string,
 }
 
 interface IStorageContext {
-    updateSavedUser: (data: TUserData) => void;
+    updateSavedUser: (data: TUserData | null) => void;
     getSavedUser: () => TUserData | null;
 }
 
@@ -15,7 +16,12 @@ export const StorageContext = createContext({} as IStorageContext);
 
 export default function StorageProvider({ children }: { children: ReactNode }) {
 
-    function updateSavedUser(data: TUserData): void {
+    function updateSavedUser(data: TUserData | null): void {
+        if (data === null) {
+            localStorage.removeItem("userData");
+            return;
+        }
+
         localStorage.setItem("userData", JSON.stringify(data));
     }
 
