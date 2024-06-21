@@ -1,49 +1,78 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/use_auth";
+import useRequest from "../hooks/use_request";
+import useStorage from "../hooks/use_storage";
+
+interface DashboardStats {
+    users: number;
+    complaints: number;
+    restrictedAccounts: number;
+    serviceProviders: number;
+    pendingApplications: number;
+}
 
 export default function Dashboard() {
-    const [userCount, setUserCount] = useState(0);
-    const [complaintCount, setComplaintCount] = useState(0);
-    const [restrictedAccountCount, setRestrictedAccountCount] = useState(0);
-    const [verifiedServiceProviderCount, setVerifiedServiceProviderCount] =
-        useState(0);
-    const [pendingApplicationCount, setPendingApplicationCount] = useState(0);
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+    const { send } = useRequest();
+    const { getSavedUser } = useStorage();
 
-    useEffect(function () {
-        async function fetchData() {
-            try {
-                const userResponse = await axios.get("/v1/admin/users/count");
-                const complaintResponse = await axios.get(
-                    "/v1/admin/complaints/count"
-                );
-                const restrictedAccountResponse = await axios.get(
-                    "/v1/admin/vendor/count"
-                );
-                const verifiedServiceProviderResponse = await axios.get(
-                    "/v1/public/vendors"
-                );
-                const pendingApplicationResponse = await axios.get(
-                    "/v1/admin/application/count"
-                );
+    const [stats, setStats] = useState({
+        users: 0,
+        complaints: 0,
+        restrictedAccounts: 0,
+        serviceProviders: 0,
+        pendingApplications: 0,
+    });
 
-                setUserCount(userResponse.data.count);
-                setComplaintCount(complaintResponse.data.count);
-                setRestrictedAccountCount(
-                    restrictedAccountResponse.data.restricted
-                );
-                setVerifiedServiceProviderCount(
-                    verifiedServiceProviderResponse.data.count
-                );
-                setPendingApplicationCount(
-                    pendingApplicationResponse.data.count
-                );
-            } catch (error) {
-                console.error("Error fetching data", error);
-            }
+    async function fetchDashboardData() {
+        const serverAddr = import.meta.env.VITE_BACKEND_URL;
+        const url = `${serverAddr}/v1/dashboard-stats`;
+
+        const user = getSavedUser();
+        if (user === null) {
+            console.log("no user data found");
+            return;
         }
 
-        fetchData();
-    }, []);
+        try {
+            const response = await send(user.accessToken, url, "GET");
+            if (!response.success) {
+                console.log("Request failed");
+                return;
+            }
+
+            setStats(response.data as DashboardStats);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function initializeDashboard() {
+        fetchDashboardData();
+    }
+
+    function useInitializeDashboard() {
+        useEffect(function () {
+            initializeDashboard();
+        }, []);
+    }
+
+    useInitializeDashboard();
+
+    async function handleLogout() {
+        try {
+            const response = await logout();
+            if (!response.success) {
+                throw new Error(response.error);
+            }
+
+            navigate("/login");
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     return (
         <div className="flex-1 p-4">
@@ -62,14 +91,16 @@ export default function Dashboard() {
                     <h2 className="mb-2 font-semibold text-lg">
                         Number of Users
                     </h2>
-                    <p className="font-bold text-3xl text-blue">{userCount}</p>
+                    <p className="font-bold text-3xl text-blue">
+                        {stats.users}
+                    </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Number of Complaints
                     </h2>
                     <p className="font-bold text-3xl text-red">
-                        {complaintCount}
+                        {stats.complaints}
                     </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
@@ -77,7 +108,7 @@ export default function Dashboard() {
                         Restricted Accounts
                     </h2>
                     <p className="font-bold text-3xl text-yellow">
-                        {restrictedAccountCount}
+                        {stats.restrictedAccounts}
                     </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
@@ -85,7 +116,7 @@ export default function Dashboard() {
                         Verified Service Providers
                     </h2>
                     <p className="font-bold text-3xl text-primary">
-                        {verifiedServiceProviderCount}
+                        {stats.serviceProviders}
                     </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
@@ -93,7 +124,7 @@ export default function Dashboard() {
                         Pending Applications
                     </h2>
                     <p className="font-bold text-3xl text-orange">
-                        {pendingApplicationCount}
+                        {stats.pendingApplications}
                     </p>
                 </div>
                 <div className="col-span-3 shadow-md p-4 border rounded-md">
@@ -105,6 +136,12 @@ export default function Dashboard() {
                     />
                 </div>
             </section>
+            <button
+                onClick={handleLogout}
+                className="bg-red-lightred mt-4 p-2 rounded text-white"
+            >
+                Logout
+            </button>
         </div>
     );
 }
