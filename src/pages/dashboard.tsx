@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/use_auth";
 import useRequest from "../hooks/use_request";
 import useStorage from "../hooks/use_storage";
 
@@ -13,11 +11,8 @@ interface DashboardStats {
 }
 
 export default function Dashboard() {
-    const navigate = useNavigate();
-    const { logout } = useAuth();
     const { send } = useRequest();
     const { getSavedUser } = useStorage();
-
     const [stats, setStats] = useState({
         users: 0,
         complaints: 0,
@@ -60,19 +55,6 @@ export default function Dashboard() {
     }
 
     useInitializeDashboard();
-
-    async function handleLogout() {
-        try {
-            const response = await logout();
-            if (!response.success) {
-                throw new Error(response.error);
-            }
-
-            navigate("/login");
-        } catch (e) {
-            console.error(e);
-        }
-    }
 
     return (
         <div className="flex-1 p-4">
@@ -136,12 +118,6 @@ export default function Dashboard() {
                     />
                 </div>
             </section>
-            <button
-                onClick={handleLogout}
-                className="bg-red-lightred mt-4 p-2 rounded text-white"
-            >
-                Logout
-            </button>
         </div>
     );
 }
