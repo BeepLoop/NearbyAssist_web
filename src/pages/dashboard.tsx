@@ -1,4 +1,61 @@
+import { useState, useEffect } from "react";
+import useRequest from "../hooks/use_request";
+import useStorage from "../hooks/use_storage";
+
+interface DashboardStats {
+    users: number;
+    complaints: number;
+    restrictedAccounts: number;
+    serviceProviders: number;
+    pendingApplications: number;
+}
+
 export default function Dashboard() {
+    const { send } = useRequest();
+    const { getSavedUser } = useStorage();
+    const [stats, setStats] = useState({
+        users: 0,
+        complaints: 0,
+        restrictedAccounts: 0,
+        serviceProviders: 0,
+        pendingApplications: 0,
+    });
+
+    async function fetchDashboardData() {
+        const serverAddr = import.meta.env.VITE_BACKEND_URL;
+        const url = `${serverAddr}/v1/dashboard-stats`;
+
+        const user = getSavedUser();
+        if (user === null) {
+            console.log("no user data found");
+            return;
+        }
+
+        try {
+            const response = await send(user.accessToken, url, "GET");
+            if (!response.success) {
+                console.log("Request failed");
+                return;
+            }
+
+            setStats(response.data as DashboardStats);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function initializeDashboard() {
+        fetchDashboardData();
+    }
+
+    function useInitializeDashboard() {
+        useEffect(function () {
+            initializeDashboard();
+        }, []);
+    }
+
+    useInitializeDashboard();
+
     return (
         <div className="flex-1 p-4">
             <div className="bg-primary px-4 py-4 text-white">
@@ -16,31 +73,41 @@ export default function Dashboard() {
                     <h2 className="mb-2 font-semibold text-lg">
                         Number of Users
                     </h2>
-                    <p className="font-bold text-3xl text-blue">500</p>
+                    <p className="font-bold text-3xl text-blue">
+                        {stats.users}
+                    </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Number of Complaints
                     </h2>
-                    <p className="font-bold text-3xl text-red">50</p>
+                    <p className="font-bold text-3xl text-red">
+                        {stats.complaints}
+                    </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Restricted Accounts
                     </h2>
-                    <p className="font-bold text-3xl text-yellow">10</p>
+                    <p className="font-bold text-3xl text-yellow">
+                        {stats.restrictedAccounts}
+                    </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Verified Service Providers
                     </h2>
-                    <p className="font-bold text-3xl text-primary">200</p>
+                    <p className="font-bold text-3xl text-primary">
+                        {stats.serviceProviders}
+                    </p>
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Pending Applications
                     </h2>
-                    <p className="font-bold text-3xl text-orange">20</p>
+                    <p className="font-bold text-3xl text-orange">
+                        {stats.pendingApplications}
+                    </p>
                 </div>
                 <div className="col-span-3 shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-xl">Map Overview</h2>
