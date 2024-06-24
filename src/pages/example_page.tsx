@@ -53,9 +53,17 @@ export default function ExamplePage() {
         <div>
             <h1 className="my-2">This is from example page</h1>
             <p className="my-2">context value: {value}</p>
-            <ExampleButton title={isLoading ? "loading..." : "test request"} action={sample} styles="rounded bg-primary p-2" />
+            <ExampleButton
+                title={isLoading ? "loading..." : "test request"}
+                action={sample}
+                styles="rounded bg-primary p-2"
+            />
             <br />
-            <ExampleButton title={isLoading ? "loading..." : "test logout"} action={sampleLogout} styles="rounded bg-red-lightred p-2 text-white" />
+            <ExampleButton
+                title={isLoading ? "loading..." : "test logout"}
+                action={sampleLogout}
+                styles="rounded bg-red-lightred p-2 text-white"
+            />
         </div>
     );
 }
