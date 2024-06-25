@@ -2,33 +2,33 @@ import { useState, useEffect } from "react";
 import useRequest from "../hooks/use_request";
 import useStorage from "../hooks/use_storage";
 
-interface DashboardStats {
+type DashboardStats = {
     users: number;
     complaints: number;
     restrictedAccounts: number;
     serviceProviders: number;
     pendingApplications: number;
-}
+};
 
-interface UsersCountResponse {
+type UsersCountResponse = {
     count: number;
-}
+};
 
-interface ComplaintsCountResponse {
+type ComplaintsCountResponse = {
     count: number;
-}
+};
 
-interface RestrictedAccountsCountResponse {
+type RestrictedAccountsCountResponse = {
     count: number;
-}
+};
 
-interface ServiceProvidersResponse {
+type ServiceProvidersResponse = {
     length: number;
-}
+};
 
-interface PendingApplicationsCountResponse {
+type PendingApplicationsCountResponse = {
     count: number;
-}
+};
 
 export default function Dashboard() {
     const { send } = useRequest();
@@ -63,7 +63,7 @@ export default function Dashboard() {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
         const url = `${serverAddr}/v1/admin/complaints/count`;
         const user = getSavedUser();
-        if (!user) {
+        if (user === null) {
             console.log("no user data found");
             return 0;
         }
@@ -79,7 +79,7 @@ export default function Dashboard() {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
         const url = `${serverAddr}/v1/admin/vendor/count`;
         const user = getSavedUser();
-        if (!user) {
+        if (user === null) {
             console.log("no user data found");
             return 0;
         }
@@ -95,7 +95,7 @@ export default function Dashboard() {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
         const url = `${serverAddr}/v1/public/services`;
         const user = getSavedUser();
-        if (!user) {
+        if (user === null) {
             console.log("no user data found");
             return 0;
         }
@@ -111,7 +111,7 @@ export default function Dashboard() {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
         const url = `${serverAddr}/v1/admin/application/count`;
         const user = getSavedUser();
-        if (!user) {
+        if (user === null) {
             console.log("no user data found");
             return 0;
         }
