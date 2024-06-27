@@ -8,7 +8,7 @@ export default function Header() {
     }
 
     return (
-        <header className="flex justify-end items-center bg-black px-6 py-4 text-white">
+        <header className="flex justify-end items-center bg-primary-greener px-6 py-4 text-white">
             <div className="flex items-center px-4">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

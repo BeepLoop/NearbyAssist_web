@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import UseExampleContext from "../hooks/use_example_context";
 import useRequest from "../hooks/use_request";
 import useStorage from "../hooks/use_storage";
 
@@ -22,8 +23,8 @@ type RestrictedAccountsCountResponse = {
     count: number;
 };
 
-type ServiceProvidersResponse = {
-    length: number;
+type ServiceProvidersCountResponse = {
+    count: number;
 };
 
 type PendingApplicationsCountResponse = {
@@ -31,7 +32,8 @@ type PendingApplicationsCountResponse = {
 };
 
 export default function Dashboard() {
-    const { send } = useRequest();
+    const { value } = UseExampleContext();
+    const { send, isLoading } = useRequest();
     const { getSavedUser } = useStorage();
     const [stats, setStats] = useState<DashboardStats>({
         users: 0,
@@ -51,31 +53,54 @@ export default function Dashboard() {
             console.log("no user data found");
             return 0;
         }
+        console.log("Fetching users count with token:", user.accessToken);
+
         const response = await send<UsersCountResponse>(
             user.accessToken,
             url,
             "GET"
         );
+        console.log("Users count response:", response);
         return response.success ? response.data.count : 0;
     }
 
     async function fetchComplaintsCount(): Promise<number> {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/admin/complaints/count`;
+        const url = `${serverAddr}/v1/admin/complaints/system/count`;
         const user = getSavedUser();
         if (user === null) {
             console.log("no user data found");
             return 0;
         }
+        console.log("Fetching complaints count with token:", user.accessToken);
         const response = await send<ComplaintsCountResponse>(
             user.accessToken,
             url,
             "GET"
         );
+        console.log("Complaints count response:", response);
         return response.success ? response.data.count : 0;
     }
 
     async function fetchRestrictedAccountsCount(): Promise<number> {
+        const serverAddr = import.meta.env.VITE_BACKEND_URL;
+        const url = `${serverAddr}/v1/admin/restrict/count`;
+        const user = getSavedUser();
+        if (user === null) {
+            console.log("no user data found");
+            return 0;
+        }
+        console.log("Fetching restrict count with token:", user.accessToken);
+        const response = await send<RestrictedAccountsCountResponse>(
+            user.accessToken,
+            url,
+            "GET"
+        );
+        console.log("Restrict count response:", response);
+        return response.success ? response.data.count : 0;
+    }
+
+    async function fetchServiceProvidersCount(): Promise<number> {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
         const url = `${serverAddr}/v1/admin/vendor/count`;
         const user = getSavedUser();
@@ -83,43 +108,36 @@ export default function Dashboard() {
             console.log("no user data found");
             return 0;
         }
-        const response = await send<RestrictedAccountsCountResponse>(
-            user.accessToken,
-            url,
-            "GET"
+        console.log(
+            "Fetching Service Vendor count with token:",
+            user.accessToken
         );
-        return response.success ? response.data.count : 0;
-    }
 
-    async function fetchServiceProvidersCount(): Promise<number> {
-        const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/public/services`;
-        const user = getSavedUser();
-        if (user === null) {
-            console.log("no user data found");
-            return 0;
-        }
-        const response = await send<ServiceProvidersResponse>(
+        const response = await send<ServiceProvidersCountResponse>(
             user.accessToken,
             url,
             "GET"
         );
-        return response.success ? response.data.length : 0;
+        console.log("Vendor count response:", response);
+        return response.success ? response.data.count : 0;
     }
 
     async function fetchPendingApplicationsCount(): Promise<number> {
         const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/admin/application/count`;
+        const url = `${serverAddr}/v1/admin/application/count?filter=pending`;
         const user = getSavedUser();
         if (user === null) {
             console.log("no user data found");
             return 0;
         }
+        console.log("Fetching Application count with token:", user.accessToken);
+
         const response = await send<PendingApplicationsCountResponse>(
             user.accessToken,
             url,
             "GET"
         );
+        console.log("Application count response:", response);
         return response.success ? response.data.count : 0;
     }
 
@@ -161,7 +179,7 @@ export default function Dashboard() {
         fetchDashboardData();
     }, []);
 
-    if (loading) {
+    if (isLoading || loading) {
         return <div>Loading...</div>;
     }
 
@@ -184,7 +202,7 @@ export default function Dashboard() {
             <section className="gap-4 grid grid-cols-1 md:grid-cols-3">
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Number of Users
+                        Number of Users: {value}
                     </h2>
                     <p className="font-bold text-3xl text-blue">
                         {stats.users}
@@ -192,7 +210,7 @@ export default function Dashboard() {
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Number of Complaints
+                        Number of Complaints {value}
                     </h2>
                     <p className="font-bold text-3xl text-red">
                         {stats.complaints}
@@ -200,7 +218,7 @@ export default function Dashboard() {
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Restricted Accounts
+                        Restricted Accounts {value}
                     </h2>
                     <p className="font-bold text-3xl text-yellow">
                         {stats.restrictedAccounts}
@@ -208,7 +226,7 @@ export default function Dashboard() {
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Verified Service Providers
+                        Verified Service Providers {value}
                     </h2>
                     <p className="font-bold text-3xl text-primary">
                         {stats.serviceProviders}
@@ -216,7 +234,7 @@ export default function Dashboard() {
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Pending Applications
+                        Pending Applications {value}
                     </h2>
                     <p className="font-bold text-3xl text-orange">
                         {stats.pendingApplications}
