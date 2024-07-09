@@ -6,7 +6,7 @@ type DashboardStats = {
     users: number;
     complaints: number;
     restrictedAccounts: number;
-    serviceProviders: number;
+    serviceVendors: number;
     pendingApplications: number;
 };
 
@@ -22,8 +22,8 @@ type RestrictedAccountsCountResponse = {
     count: number;
 };
 
-type ServiceProvidersResponse = {
-    length: number;
+type ServiceVendorsCountResponse = {
+    count: number;
 };
 
 type PendingApplicationsCountResponse = {
@@ -37,137 +37,204 @@ export default function Dashboard() {
         users: 0,
         complaints: 0,
         restrictedAccounts: 0,
-        serviceProviders: 0,
+        serviceVendors: 0,
         pendingApplications: 0,
     });
-    const [loading, setLoading] = useState(true);
+    const [loadingStates, setLoadingStates] = useState({
+        users: true,
+        complaints: true,
+        restrictedAccounts: true,
+        serviceVendors: true,
+        pendingApplications: true,
+    });
     const [error, setError] = useState<string | null>(null);
 
-    async function fetchUsersCount(): Promise<number> {
-        const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/admin/users/count`;
-        const user = getSavedUser();
-        if (user === null) {
-            console.log("no user data found");
-            return 0;
-        }
-        const response = await send<UsersCountResponse>(
-            user.accessToken,
-            url,
-            "GET"
-        );
-        return response.success ? response.data.count : 0;
-    }
-
-    async function fetchComplaintsCount(): Promise<number> {
-        const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/admin/complaints/count`;
-        const user = getSavedUser();
-        if (user === null) {
-            console.log("no user data found");
-            return 0;
-        }
-        const response = await send<ComplaintsCountResponse>(
-            user.accessToken,
-            url,
-            "GET"
-        );
-        return response.success ? response.data.count : 0;
-    }
-
-    async function fetchRestrictedAccountsCount(): Promise<number> {
-        const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/admin/vendor/count`;
-        const user = getSavedUser();
-        if (user === null) {
-            console.log("no user data found");
-            return 0;
-        }
-        const response = await send<RestrictedAccountsCountResponse>(
-            user.accessToken,
-            url,
-            "GET"
-        );
-        return response.success ? response.data.count : 0;
-    }
-
-    async function fetchServiceProvidersCount(): Promise<number> {
-        const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/public/services`;
-        const user = getSavedUser();
-        if (user === null) {
-            console.log("no user data found");
-            return 0;
-        }
-        const response = await send<ServiceProvidersResponse>(
-            user.accessToken,
-            url,
-            "GET"
-        );
-        return response.success ? response.data.length : 0;
-    }
-
-    async function fetchPendingApplicationsCount(): Promise<number> {
-        const serverAddr = import.meta.env.VITE_BACKEND_URL;
-        const url = `${serverAddr}/v1/admin/application/count`;
-        const user = getSavedUser();
-        if (user === null) {
-            console.log("no user data found");
-            return 0;
-        }
-        const response = await send<PendingApplicationsCountResponse>(
-            user.accessToken,
-            url,
-            "GET"
-        );
-        return response.success ? response.data.count : 0;
-    }
-
-    async function fetchDashboardData() {
+    async function fetchUsersCount(): Promise<void> {
         try {
-            setLoading(true);
-            setError(null);
+            const serverAddr = import.meta.env.VITE_BACKEND_URL;
+            const url = `${serverAddr}/v1/admin/users/count`;
+            const user = getSavedUser();
+            if (user === null) {
+                console.log("no user data found");
+                return;
+            }
+            console.log("Fetching users count with token:", user.accessToken);
 
-            const [
-                users,
-                complaints,
-                restrictedAccounts,
-                serviceProviders,
-                pendingApplications,
-            ] = await Promise.all([
-                fetchUsersCount(),
-                fetchComplaintsCount(),
-                fetchRestrictedAccountsCount(),
-                fetchServiceProvidersCount(),
-                fetchPendingApplicationsCount(),
-            ]);
-
-            setStats({
-                users,
-                complaints,
-                restrictedAccounts,
-                serviceProviders,
-                pendingApplications,
+            const response = await send<UsersCountResponse>(
+                user.accessToken,
+                url,
+                "GET"
+            );
+            console.log("Users count response:", response);
+            setStats(function (prevStats) {
+                return {
+                    ...prevStats,
+                    users: response.success ? response.data.count : 0,
+                };
             });
         } catch (err) {
-            setError("Failed to fetch dashboard data.");
-            console.error(err);
+            console.error("Failed to fetch users count:", err);
+            setError("Failed to fetch users count.");
         } finally {
-            setLoading(false);
+            setLoadingStates(function (prev) {
+                return { ...prev, users: false };
+            });
+        }
+    }
+
+    async function fetchComplaintsCount(): Promise<void> {
+        try {
+            const serverAddr = import.meta.env.VITE_BACKEND_URL;
+            const url = `${serverAddr}/v1/admin/complaints/system/count`;
+            const user = getSavedUser();
+            if (user === null) {
+                console.log("no user data found");
+                return;
+            }
+            console.log(
+                "Fetching complaints count with token:",
+                user.accessToken
+            );
+            const response = await send<ComplaintsCountResponse>(
+                user.accessToken,
+                url,
+                "GET"
+            );
+            console.log("Complaints count response:", response);
+            setStats(function (prevStats) {
+                return {
+                    ...prevStats,
+                    complaints: response.success ? response.data.count : 0,
+                };
+            });
+        } catch (err) {
+            console.error("Failed to fetch complaints count:", err);
+            setError("Failed to fetch complaints count.");
+        } finally {
+            setLoadingStates(function (prev) {
+                return { ...prev, complaints: false };
+            });
+        }
+    }
+
+    async function fetchRestrictedAccountsCount(): Promise<void> {
+        try {
+            const serverAddr = import.meta.env.VITE_BACKEND_URL;
+            const url = `${serverAddr}/v1/admin/vendor/count?status=restricted`;
+            const user = getSavedUser();
+            if (user === null) {
+                console.log("no user data found");
+                return;
+            }
+            console.log(
+                "Fetching restricted accounts count with token:",
+                user.accessToken
+            );
+            const response = await send<RestrictedAccountsCountResponse>(
+                user.accessToken,
+                url,
+                "GET"
+            );
+            console.log("Restricted accounts count response:", response);
+            setStats(function (prevStats) {
+                return {
+                    ...prevStats,
+                    restrictedAccounts: response.success
+                        ? response.data.count
+                        : 0,
+                };
+            });
+        } catch (err) {
+            console.error("Failed to fetch restricted accounts count:", err);
+            setError("Failed to fetch restricted accounts count.");
+        } finally {
+            setLoadingStates(function (prev) {
+                return { ...prev, restrictedAccounts: false };
+            });
+        }
+    }
+
+    async function fetchServiceProvidersCount(): Promise<void> {
+        try {
+            const serverAddr = import.meta.env.VITE_BACKEND_URL;
+            const url = `${serverAddr}/v1/admin/vendor/count`;
+            const user = getSavedUser();
+            if (user === null) {
+                console.log("no user data found");
+                return;
+            }
+            console.log(
+                "Fetching service vendors count with token:",
+                user.accessToken
+            );
+
+            const response = await send<ServiceVendorsCountResponse>(
+                user.accessToken,
+                url,
+                "GET"
+            );
+            console.log("Service vendors count response:", response);
+            setStats(function (prevStats) {
+                return {
+                    ...prevStats,
+                    serviceVendors: response.success ? response.data.count : 0,
+                };
+            });
+        } catch (err) {
+            console.error("Failed to fetch service vendors count:", err);
+            setError("Failed to fetch service vendors count.");
+        } finally {
+            setLoadingStates(function (prev) {
+                return { ...prev, serviceVendors: false };
+            });
+        }
+    }
+
+    async function fetchPendingApplicationsCount(): Promise<void> {
+        try {
+            const serverAddr = import.meta.env.VITE_BACKEND_URL;
+            const url = `${serverAddr}/v1/admin/application/count?filter=pending`;
+            const user = getSavedUser();
+            if (user === null) {
+                console.log("no user data found");
+                return;
+            }
+            console.log(
+                "Fetching pending applications count with token:",
+                user.accessToken
+            );
+
+            const response = await send<PendingApplicationsCountResponse>(
+                user.accessToken,
+                url,
+                "GET"
+            );
+            console.log("Pending applications count response:", response);
+            setStats(function (prevStats) {
+                return {
+                    ...prevStats,
+                    pendingApplications: response.success
+                        ? response.data.count
+                        : 0,
+                };
+            });
+        } catch (err) {
+            console.error("Failed to fetch pending applications count:", err);
+            setError("Failed to fetch pending applications count.");
+        } finally {
+            setLoadingStates(function (prev) {
+                return { ...prev, pendingApplications: false };
+            });
         }
     }
 
     useEffect(function () {
-        fetchDashboardData();
+        fetchUsersCount();
+        fetchComplaintsCount();
+        fetchRestrictedAccountsCount();
+        fetchServiceProvidersCount();
+        fetchPendingApplicationsCount();
     }, []);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     return (
         <div className="flex-1 p-4">
@@ -180,47 +247,72 @@ export default function Dashboard() {
                     Welcome to the dashboard, admin. Here's an overview of the
                     current statistics:
                 </p>
+                {error && (
+                    <div className="mt-2 text-red-500">
+                        <p>Error: {error}</p>
+                    </div>
+                )}
             </div>
             <section className="gap-4 grid grid-cols-1 md:grid-cols-3">
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Number of Users
+                        Number of Users:
                     </h2>
-                    <p className="font-bold text-3xl text-blue">
-                        {stats.users}
-                    </p>
+                    {loadingStates.users ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <p className="font-bold text-3xl text-blue">
+                            {stats.users}
+                        </p>
+                    )}
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Number of Complaints
                     </h2>
-                    <p className="font-bold text-3xl text-red">
-                        {stats.complaints}
-                    </p>
+                    {loadingStates.complaints ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <p className="font-bold text-3xl text-red">
+                            {stats.complaints}
+                        </p>
+                    )}
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Restricted Accounts
                     </h2>
-                    <p className="font-bold text-3xl text-yellow">
-                        {stats.restrictedAccounts}
-                    </p>
+                    {loadingStates.restrictedAccounts ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <p className="font-bold text-3xl text-yellow">
+                            {stats.restrictedAccounts}
+                        </p>
+                    )}
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
-                        Verified Service Providers
+                        Service Vendors
                     </h2>
-                    <p className="font-bold text-3xl text-primary">
-                        {stats.serviceProviders}
-                    </p>
+                    {loadingStates.serviceVendors ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <p className="font-bold text-3xl text-primary">
+                            {stats.serviceVendors}
+                        </p>
+                    )}
                 </div>
                 <div className="shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-lg">
                         Pending Applications
                     </h2>
-                    <p className="font-bold text-3xl text-orange">
-                        {stats.pendingApplications}
-                    </p>
+                    {loadingStates.pendingApplications ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <p className="font-bold text-3xl text-orange">
+                            {stats.pendingApplications}
+                        </p>
+                    )}
                 </div>
                 <div className="col-span-3 shadow-md p-4 border rounded-md">
                     <h2 className="mb-2 font-semibold text-xl">Map Overview</h2>
