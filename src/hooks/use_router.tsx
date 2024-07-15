@@ -13,6 +13,9 @@ import ExamplePage from "../pages/example_page";
 import ApplicationDetails from "../pages/application_details";
 import ComplaintLayout from "../layout/complaint_layout";
 import ApplicationLayout from "../layout/application_layout";
+import VerificationLayout from "../layout/verification_layout";
+import Verification from "../pages/verification";
+import VerificationDetails from "../pages/verification_details";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +33,20 @@ const router = createBrowserRouter([
             {
                 path: "dashboard",
                 element: <Dashboard />,
+            },
+            {
+                path: "verification",
+                element: <VerificationLayout />,
+                children: [
+                    {
+                        path: "",
+                        element: <Verification />,
+                    },
+                    {
+                        path: ":verificationId",
+                        element: <VerificationDetails />,
+                    },
+                ],
             },
             {
                 path: "complaints",
