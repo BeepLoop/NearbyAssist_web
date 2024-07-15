@@ -13,6 +13,9 @@ import ExamplePage from "../pages/example_page";
 import ApplicationDetails from "../pages/application_details";
 import ComplaintLayout from "../layout/complaint_layout";
 import ApplicationLayout from "../layout/application_layout";
+import SystemIssuesLayout from "../layout/system_issue_layout";
+import SystemIssues from "../pages/system_issue";
+import SystemIssuesDetails from "../pages/system_issue_details";
 
 const router = createBrowserRouter([
     {
@@ -66,6 +69,20 @@ const router = createBrowserRouter([
             {
                 path: "management",
                 element: <AccountManagement />,
+            },
+            {
+                path: "system_issues",
+                element: <SystemIssuesLayout />,
+                children: [
+                    {
+                        path: "",
+                        element: <SystemIssues />,
+                    },
+                    {
+                        path: ":systemissueId",
+                        element: <SystemIssuesDetails />,
+                    },
+                ],
             },
             {
                 path: "example",
