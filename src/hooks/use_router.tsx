@@ -14,6 +14,8 @@ import ApplicationDetails from "../pages/application_details";
 import ComplaintLayout from "../layout/complaint_layout";
 import ApplicationLayout from "../layout/application_layout";
 
+import SolvedComplaints from "../pages/solved_complaints";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -66,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path: "management",
                 element: <AccountManagement />,
+            },
+            {
+                path: "solved_complaints",
+                element: <SolvedComplaints />,
             },
             {
                 path: "example",

@@ -76,6 +76,21 @@ export default function Sidebar() {
                             />
                         </svg>
                     </NavItem>
+                    <NavItem
+                        path="/solved_complaints"
+                        title="Solved Complaints"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={`w-6 `}
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M4 8h16V6H4zM2 20V4h20v8H4v6h4.1v2zm12.95 2l-4.25-4.25l1.4-1.4l2.85 2.8l5.65-5.65l1.4 1.45zM4 18v-4.5v2.825V6z"
+                            />
+                        </svg>
+                    </NavItem>
                 </ul>
             </div>
         </div>
